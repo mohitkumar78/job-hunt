@@ -1,12 +1,25 @@
-import { Button } from "@/components/ui/button";
-
-import "./App.css";
-
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Login from "./components/Auth/Login";
+import Signup from "./components/Auth/Signup";
+import Home from "./components/Home";
+const routes = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/Login",
+    element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
+  },
+]);
 function App() {
   return (
     <>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>{" "}
-      <Button>jgjh</Button>
+      <RouterProvider router={routes} />
     </>
   );
 }
