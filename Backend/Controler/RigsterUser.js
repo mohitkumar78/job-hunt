@@ -7,16 +7,17 @@ dotenv.config();
 
 export const register = async (req, res) => {
     try {
-        const { name, email, fullname, PhoneNumber, Password, role } = req.body;
-
+        console.log("req came")
+        const { name, email, fullname, PhoneNumber, password, role } = req.body;
+        console.log(name)
         // Check if any required fields are missing
-        if (!name || !email || !fullname || !PhoneNumber || !Password || !role) {
+        if (!name || !email || !fullname || !PhoneNumber || !password || !role) {
             return res.status(400).json({
                 message: "Something is missing",
                 success: false
             });
         }
-
+        console.log(name)
         // Check if user already exists
         const user = await User.findOne({ email });
         if (user) {
@@ -26,37 +27,43 @@ export const register = async (req, res) => {
             });
         }
 
-        // Hash the password
-        const hashedPassword = await bcrypt.hash(Password, 10);
-
-        // Create a new user
-        await User.create({
+        const newUser = new User({
             name,
             email,
             fullname,
             PhoneNumber,
-            Password: hashedPassword,
-            role
+            Password: password,
+            role,
+            profile: {
+                profileImg: req.file ? req.file.path : "", // Assuming multer file handling
+                resume: req.body.resume ? req.body.resume : null
+            }
         });
+
+        // Save the new user to the database
+        await newUser.save();
 
         return res.status(201).json({
             message: "User registered successfully",
-            success: true
+            success: true,
+            user: newUser
         });
     } catch (error) {
-        console.error("Error occurred while registering", error.message);
-        res.status(500).json({
-            message: "Server error occurred",
+        console.error("Error while registering:", error);
+        return res.status(500).json({
+            message: "Server error",
             success: false
         });
     }
 };
 
+
 export const login = async (req, res) => {
     try {
-        const { email, Password, role } = req.body;
-
-        if (!email || !Password || !role) {
+        console.log("reqest is comming")
+        const { email, password, role } = req.body;
+        console.log(email, password, role)
+        if (!email || !password || !role) {
             return res.status(400).json({
                 message: "Something is missing",
                 success: false
@@ -64,7 +71,7 @@ export const login = async (req, res) => {
         }
 
         let user = await User.findOne({ email });
-
+        console.log(user)
         if (!user) {
             return res.status(400).json({
                 message: "User does not exist",
@@ -72,8 +79,8 @@ export const login = async (req, res) => {
             });
         }
 
-        const isPasswordMatch = await bcrypt.compare(Password, user.Password);
-
+        const isPasswordMatch = await bcrypt.compare(password, user.Password);
+        console.log()
         if (!isPasswordMatch) {
             return res.status(400).json({
                 message: "Incorrect password",

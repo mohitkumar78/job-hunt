@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema({
             type: String
         }],
         resume: {
-            type: String  // url of the resume file
+            type: String  // URL of the resume file
         },
         resumeFullName: {
             type: String
@@ -45,17 +45,12 @@ const userSchema = new mongoose.Schema({
             ref: 'Company'
         },
         profileImg: {
-            type: String, // url for cloudnary image
+            type: String, // URL for cloudinary or other image hosting
             default: ""
         }
-
-
-    },
-
-
-
+    }
 }, {
     timestamps: true
-})
+});
 
 export const User = mongoose.model('User', userSchema);
