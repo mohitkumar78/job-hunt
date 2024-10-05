@@ -7,7 +7,7 @@ function Jobs() {
 
   return (
     <div>
-      <div className="mt-5 mx-60 max-w-7xl">
+      <div className="mx-auto mt-5 max-w-7xl">
         <div className="flex gap-4">
           <div className="w-1/5">
             <FilterJob />

@@ -76,7 +76,9 @@ function Navbar() {
                 <div className="flex flex-col mt-4 text-gray-600">
                   <div className="flex items-center mb-2">
                     <User2 className="mr-2" />
-                    <Button variant="link">View Profile</Button>
+                    <Button variant="link">
+                      <Link to="/profile">View Profile</Link>
+                    </Button>
                   </div>
                   <div className="flex items-center">
                     <LogOut className="mr-2" />
