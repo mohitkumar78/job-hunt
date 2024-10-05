@@ -22,7 +22,7 @@ function Categorycarousel() {
     <div className="flex items-center justify-center gap-3">
       {Category.map((cat, index) => {
         return (
-          <Button variant="outline" className="rounded-full">
+          <Button key={index} variant="outline" className="rounded-full">
             {cat}
           </Button>
         );

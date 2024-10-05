@@ -10,8 +10,8 @@ function LatestJob() {
       </h1>
 
       <div className="grid grid-cols-3 gap-4 my-5 ">
-        {dummy.map((item) => {
-          return <JobCard />;
+        {dummy.map((item, index) => {
+          return <JobCard key={index} />;
         })}
       </div>
     </div>

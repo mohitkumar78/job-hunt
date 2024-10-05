@@ -4,6 +4,7 @@ import Signup from "./components/Auth/Signup";
 import Home from "./components/Home";
 import Admin from "./components/Admin";
 import Layout from "./components/Layout/Layout";
+import Jobs from "./components/Jobs";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -24,6 +25,10 @@ const routes = createBrowserRouter([
       {
         path: "admin", // The Admin route
         element: <Admin />,
+      },
+      {
+        path: "job",
+        element: <Jobs />,
       },
     ],
   },
