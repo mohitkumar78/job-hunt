@@ -6,8 +6,9 @@ import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { login } from "../../redux/auth.slice";
+import { setUser } from "../../redux/auth.slice";
 import { useNavigate } from "react-router-dom";
+
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -23,9 +24,9 @@ function Login() {
       [e.target.name]: e.target.value,
     });
   };
+
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(input.password);
     try {
       const res = await axios.post(
         "http://localhost:3000/api/v1/user/login",
@@ -36,31 +37,28 @@ function Login() {
         },
         {
           headers: {
-            "Content-Type": "application/json", // Set the content type
+            "Content-Type": "application/json",
           },
         }
       );
 
-      console.log(res.data);
       if (res.data) {
-        const isAuthenticated = true;
-        console.log(res.data.user.fullname, res.data.user.email);
+        // Make sure to set both `user` and `isAuthenticated` in the dispatch payload
         dispatch(
-          login({
-            fullname: res.data.user.fullname, // Correctly structure the payload
-            email: res.data.user.email,
-            isAuthenticated,
+          setUser({
+            user: res.data.user,
+            isAuthenticated: true,
           })
         );
+
         if (res.data.user.role === "recruiter") {
           navigate("/admin");
         } else {
           navigate("/");
         }
       }
-      // Handle success response
     } catch (error) {
-      console.error("Login failed:", error.response?.data || error.message); // Handle and log the specific error
+      console.error("Login failed:", error.response?.data || error.message);
     }
   };
 

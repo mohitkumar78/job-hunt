@@ -1,34 +1,28 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// Correct the spelling of initialState
 const initialState = {
-    name: "",
-    email: "",
+    user: null,
     isAuthenticated: false
 }
 
 const authSlice = createSlice({
     name: "auth",
-    initialState, // Correct property name
+    initialState,
     reducers: {
-        login: (state, action) => {
-            console.log(action.payload.fullname)
-            console.log(action.payload.email)
-            console.log(action.payload.isAuthenticated)
-            state.name = action.payload.fullname;
-            state.email = action.payload.email; // Should refer to `action.payload.email`, not `name`
-            state.isAuthenticated = action.payload.isAuthenticated;
+        setUser: (state, action) => {
+            state.user = action.payload.user; // Set user
+            console.log(action.payload.user)
+            state.isAuthenticated = action.payload.isAuthenticated; // Set isAuthenticated flag
         },
         logout: (state) => {
-            state.name = "";
-            state.email = "";
+            state.user = null;
             state.isAuthenticated = false;
         }
     }
 });
 
 // Exporting the actions
-export const { login, logout } = authSlice.actions;
+export const { setUser, logout } = authSlice.actions;
 
-// Exporting the reducer (singular)
+// Exporting the reducer
 export default authSlice.reducer;

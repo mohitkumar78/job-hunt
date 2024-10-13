@@ -13,8 +13,9 @@ import { logout } from "../../redux/auth.slice";
 
 function Navbar() {
   const dispatch = useDispatch(); // Initialize useDispatch
-  const { name, email, isAuthenticated } = useSelector((state) => state.auth);
-  console.log(name, email, isAuthenticated);
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
+  console.log(user, isAuthenticated);
+
   const handleLogout = () => {
     dispatch(logout()); // Dispatch logout action
   };
@@ -65,8 +66,8 @@ function Navbar() {
                   </Avatar>
 
                   <div>
-                    <h4 className="font-medium">{name}</h4>
-                    <h4 className="font-medium">{email}</h4>
+                    <h4 className="font-medium">{user.fullname}</h4>
+                    <h4 className="font-medium">{user.email}</h4>
                     <p className="text-sm text-muted-foreground">
                       Lorem ipsum dolor sit amet consectetur
                     </p>

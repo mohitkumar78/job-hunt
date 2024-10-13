@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { Mail, Contact, Pen } from "lucide-react";
 import { Button } from "./ui/button";
 import { Label } from "./ui/label"; // Add this if `Label` is part of your components
 import AppliedJobTable from "./AppliedJobTable"; // Assuming this component exists
 import { Badge } from "./ui/badge";
+import EditProfile from "./EditProfile";
 function Profile() {
+  const [open, setOpen] = useState(false);
   const isResume = true; // or set it based on your logic for the resume link
   const skills = ["Html", "Css", "Javascript", "Reactjs"];
   return (
@@ -31,7 +33,13 @@ function Profile() {
         </div>
 
         {/* Edit Button */}
-        <Button className="text-right" variant="outline">
+        <Button
+          className="text-right"
+          variant="outline"
+          onClick={() => {
+            setOpen(true);
+          }}
+        >
           <Pen className="w-5 h-5" />
         </Button>
       </div>
@@ -78,6 +86,7 @@ function Profile() {
         <h1 className="my-5 text-lg font-bold">Applied Jobs</h1>
         <AppliedJobTable />
       </div>
+      <EditProfile open={open} setOpen={setOpen} />
     </div>
   );
 }

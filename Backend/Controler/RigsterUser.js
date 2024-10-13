@@ -9,7 +9,7 @@ export const register = async (req, res) => {
     try {
         console.log("req came")
         const { name, email, fullname, PhoneNumber, password, role } = req.body;
-        console.log(name)
+        console.log(name, email, fullname, PhoneNumber, password, role)
         // Check if any required fields are missing
         if (!name || !email || !fullname || !PhoneNumber || !password || !role) {
             return res.status(400).json({
@@ -60,9 +60,10 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
     try {
-        console.log("reqest is comming")
+
         const { email, password, role } = req.body;
         console.log(email, password, role)
+
         if (!email || !password || !role) {
             return res.status(400).json({
                 message: "Something is missing",
@@ -71,14 +72,14 @@ export const login = async (req, res) => {
         }
 
         let user = await User.findOne({ email });
-        console.log(user)
+
         if (!user) {
             return res.status(400).json({
                 message: "User does not exist",
                 success: false
             });
         }
-        console.log(user.Password)
+
         const isPasswordMatch = await bcrypt.compare(password, user.Password);
         console.log(isPasswordMatch === false)
         if (isPasswordMatch) {
@@ -97,8 +98,8 @@ export const login = async (req, res) => {
 
         const tokenData = { userId: user._id };
 
-        // Debugging: Check if SECRET_KEY is loaded
-        console.log('SECRET_KEY:', process.env.SECRET_KEY);
+
+
         if (!process.env.SECRET_KEY) {
             throw new Error('Secret key is not set in environment variables');
         }
@@ -109,11 +110,13 @@ export const login = async (req, res) => {
 
         user = {
             _id: user._id,
+            token: token,
             fullname: user.fullname,
             PhoneNumber: user.PhoneNumber,
             role: user.role,
             email: user.email,
-            profile: user.profile
+            profile: user.profile,
+
         };
 
         res.status(200).cookie("token", token, {
@@ -151,23 +154,26 @@ export const logout = async (req, res) => {
 }
 
 export const Updateuser = async (req, res) => {
+    console.log("Update request coming");
     try {
         const { fullname, email, PhoneNumber, bio, skills } = req.body;
-        const userid = req._id;
+        console.log(fullname, email, PhoneNumber, bio, skills);
+
+        const userid = req.id || req.params.id; // Ensure this is the correct ID source
 
         // Convert skills to array if provided
         let skillArray;
         if (skills) {
-            skillArray = skills.split(",");
+            skillArray = skills.split(",").map(skill => skill.trim()); // Trim spaces for cleaner data
         }
 
         // Find the user by ID
-        let user = await User.findById(req.id); // Await this call
+        let user = await User.findById(userid); // Use the correct user ID
 
         // Check if user exists
         if (!user) {
             return res.status(400).json({
-                message: "User is not found",
+                message: "User not found",
                 success: false
             });
         }
@@ -189,7 +195,7 @@ export const Updateuser = async (req, res) => {
             PhoneNumber: user.PhoneNumber,
             role: user.role,
             email: user.email,
-            profile: user.profile, // This should be the entire profile object
+            profile: user.profile, // Send entire profile object
         };
 
         // Send a success response
@@ -200,9 +206,9 @@ export const Updateuser = async (req, res) => {
         });
 
     } catch (error) {
-        console.error("Error occurred while updating user:", error); // Correct typo and provide meaningful log
+        console.error("Error occurred while updating user:", error); // Improved error message
         return res.status(500).json({
-            message: "Server error occurred",
+            message: "Server error occurred while updating user",
             success: false
         });
     }

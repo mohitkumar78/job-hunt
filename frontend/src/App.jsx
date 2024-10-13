@@ -7,6 +7,7 @@ import Layout from "./components/Layout/Layout";
 import Jobs from "./components/Jobs";
 import Browse from "./components/Browse";
 import Profile from "./components/Profile";
+import JobDescription from "./components/JobDescription";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -29,8 +30,12 @@ const routes = createBrowserRouter([
         element: <Admin />,
       },
       {
-        path: "job",
+        path: "job", // The Jobs route
         element: <Jobs />,
+      },
+      {
+        path: "job/discription/:id", // <-- Fix the route here
+        element: <JobDescription />,
       },
       {
         path: "browse",

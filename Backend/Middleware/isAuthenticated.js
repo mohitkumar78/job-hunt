@@ -1,9 +1,11 @@
-import jwt from 'jsonwebtoken'
+import jwt from "jsonwebtoken"
 
 export const isAuthenticated = async (req, res, next) => {
     console.log("authentication prosess")
     try {
-        const token = req.cookies.token
+        const { token } = req.body
+        console.log(req.body)
+        console.log(token)
         if (!token) {
             return res.status(400).json({
                 message: "user is not Authenticated",
@@ -22,6 +24,6 @@ export const isAuthenticated = async (req, res, next) => {
         req.id = decode_token.userId;
         next()
     } catch (error) {
-
+        console.log("error while occur in authentication")
     }
 }
