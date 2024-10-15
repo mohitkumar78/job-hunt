@@ -50,7 +50,7 @@ function Login() {
             isAuthenticated: true,
           })
         );
-
+        console.log(res.data.user);
         if (res.data.user.role === "recruiter") {
           navigate("/admin");
         } else {

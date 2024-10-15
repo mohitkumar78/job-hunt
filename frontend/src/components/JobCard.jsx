@@ -1,26 +1,27 @@
 import React from "react";
 import { Badge } from "./ui/badge";
-function JobCard() {
+
+function JobCard({ job }) {
   return (
     <div className="p-5 bg-white border border-gray-100 rounded-md shadow-xl cursor-pointer">
       <div>
-        <h1>Company Name</h1>
-        <p>India</p>
+        <h1 className="text-lg font-medium">{job?.company?.name}</h1>
+        <p className="text-sm text-gray-500">{job?.location}</p>
       </div>
-      <diV>
-        <h1>Job Title</h1>
-        <p>Lorem ipsum dolor sit amet consectetur.lorem7</p>
-      </diV>
+      <div>
+        <h1 className="my-2 text-lg font-bold">{job.title}</h1>
+        <p className="text-sm text-gray-600">{job.description}</p>
+      </div>
 
       <div className="flex items-center gap-2 mt-4">
         <Badge className={"text-blue-700 font-bold"} variant="ghost">
-          12 Postions
+          {job.opening} opening
         </Badge>
         <Badge className={"text-[#f83002] font-bold"} variant="ghost">
-          Part Time
+          {job.jobType}
         </Badge>
         <Badge className={"text-[#7209b7] font-bold"} variant="ghost">
-          24 LPA
+          {job.sallary} rs/month
         </Badge>
       </div>
     </div>

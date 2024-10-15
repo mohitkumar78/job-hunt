@@ -4,11 +4,11 @@ import { login } from '../Controler/RigsterUser.js'
 import { logout } from '../Controler/RigsterUser.js'
 import { Updateuser } from '../Controler/RigsterUser.js'
 import { isAuthenticated } from '../Middleware/isAuthenticated.js'
-import { singleUpload } from '../Middleware/multer.js'
+import upload from '../Middleware/multer.js'
 const router = express.Router()
 
-router.route("/register").post(singleUpload, register)
+router.route("/register").post(upload.single('file'), register)
 router.route("/login").post(login)
-router.route("/profile/update").post(singleUpload, isAuthenticated, Updateuser)
+router.route("/profile/update").post(upload.single('file'), isAuthenticated, Updateuser)
 router.route("/logout").post(logout)
 export default router;

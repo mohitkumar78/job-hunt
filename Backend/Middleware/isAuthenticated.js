@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken"
 export const isAuthenticated = async (req, res, next) => {
     console.log("authentication prosess")
     try {
+        console.log(req.body)
         const { token } = req.body
         console.log(req.body)
         console.log(token)

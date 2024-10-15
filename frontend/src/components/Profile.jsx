@@ -6,28 +6,30 @@ import { Label } from "./ui/label"; // Add this if `Label` is part of your compo
 import AppliedJobTable from "./AppliedJobTable"; // Assuming this component exists
 import { Badge } from "./ui/badge";
 import EditProfile from "./EditProfile";
+import { useSelector } from "react-redux";
 function Profile() {
+  const { user } = useSelector((store) => store.auth);
+  console.log(user);
   const [open, setOpen] = useState(false);
   const isResume = true; // or set it based on your logic for the resume link
-  const skills = ["Html", "Css", "Javascript", "Reactjs"];
+  const skills = user?.profile?.skills || [];
+
   return (
     <div className="max-w-3xl p-8 mx-auto my-5 bg-white border border-gray-200 shadow-lg rounded-2xl">
       <div className="flex items-center justify-between gap-6">
         {/* Avatar Section */}
         <div className="flex items-center gap-6">
           <Avatar className="w-24 h-24">
-            <AvatarImage
-              src="https://c8.alamy.com/comp/PWRHCW/building-construction-design-to-be-used-as-a-logo-icon-template-for-business-constructors-and-more-PWRHCW.jpg"
-              alt="Profile"
-            />
+            <AvatarImage src={user?.profile.profileImg} alt="Profile" />
           </Avatar>
 
           {/* Text Section */}
           <div className="flex flex-col">
-            <h1 className="text-2xl font-bold text-gray-800">Full Name</h1>
+            <h1 className="text-2xl font-bold text-gray-800">
+              {user ? user.fullname : "Loading..."} {/* Add loading state */}
+            </h1>
             <p className="max-w-lg mt-2 leading-relaxed text-gray-600">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore
-              laudantium maxime neque voluptate tempore.
+              {user ? user.profile.bio : "Loading..."} {/* Add loading state */}
             </p>
           </div>
         </div>
@@ -48,11 +50,13 @@ function Profile() {
       <div className="my-5">
         <div className="flex items-center gap-3 my-2">
           <Mail className="w-5 h-5 text-gray-600" />
-          <span>mohitKumar6204811@gmail.com</span>
+          <span>{user ? user.email : "Loading..."}</span>{" "}
+          {/* Add loading state */}
         </div>
         <div className="flex items-center gap-3 my-2">
           <Contact className="w-5 h-5 text-gray-600" />
-          <span>+91 8873061289</span>
+          <span>{user ? `+91 ${user.PhoneNumber}` : "Loading..."}</span>{" "}
+          {/* Add loading state */}
         </div>
       </div>
       <div className="my-5">
@@ -65,16 +69,17 @@ function Profile() {
           )}
         </div>
       </div>
+
       {/* Resume Section */}
       <div className="grid w-full max-w-sm items-center gap-1.5">
         <Label className="font-bold text-md">Resume</Label>
         {isResume ? (
           <a
             target="_blank"
-            href="#"
+            href={user?.profile?.resume}
             className="text-blue-500 cursor-pointer hover:underline"
           >
-            Mohit resume
+            {user?.profile?.resumeFullName}
           </a>
         ) : (
           <span>NA</span>
@@ -90,5 +95,4 @@ function Profile() {
     </div>
   );
 }
-
 export default Profile;
