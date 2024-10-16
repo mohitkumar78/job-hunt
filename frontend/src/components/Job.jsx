@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const Job = ({ job }) => {
   const navigate = useNavigate();
-  console.log(job);
+  console.log(job); // Keep or remove this line based on your preference
   const jobid = job._id;
 
   return (
