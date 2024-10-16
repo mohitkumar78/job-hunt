@@ -8,11 +8,11 @@ dotenv.config();
 export const register = async (req, res) => {
     try {
         console.log("Request received");
-        console.log(req.body)
+
         const { name, email, fullname, PhoneNumber, password, role } = req.body;
 
         // Check if required fields are missing
-        console.log(name, email, fullname, PhoneNumber, password, role)
+
         if (!name || !email || !fullname || !PhoneNumber || !password || !role) {
             return res.status(400).json({
                 message: "Something is missing",
@@ -93,7 +93,7 @@ export const login = async (req, res) => {
     try {
 
         const { email, password, role } = req.body;
-        console.log(email, password, role)
+
 
         if (!email || !password || !role) {
             return res.status(400).json({
@@ -112,7 +112,7 @@ export const login = async (req, res) => {
         }
 
         const isPasswordMatch = await bcrypt.compare(password, user.Password);
-        console.log(isPasswordMatch === false)
+
         if (isPasswordMatch) {
             return res.status(400).json({
                 message: "Incorrect password",
@@ -149,7 +149,7 @@ export const login = async (req, res) => {
             profile: user.profile,
 
         };
-        console.log(user)
+
 
         res.status(200).cookie("token", token, {
             maxAge: 30 * 24 * 60 * 60 * 1000,

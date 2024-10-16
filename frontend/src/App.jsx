@@ -34,7 +34,7 @@ const routes = createBrowserRouter([
         element: <Jobs />,
       },
       {
-        path: "job/discription/:id", // <-- Fix the route here
+        path: "/discription/:jobid", // <-- Fix the route here
         element: <JobDescription />,
       },
       {

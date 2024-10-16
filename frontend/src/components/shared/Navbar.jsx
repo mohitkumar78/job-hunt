@@ -8,16 +8,35 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { toast } from "sonner";
 import { LogOut, User2 } from "lucide-react";
-import { logout } from "../../redux/auth.slice";
-
+import { setUser } from "../../redux/auth.slice";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 function Navbar() {
   const dispatch = useDispatch(); // Initialize useDispatch
   const { user, isAuthenticated } = useSelector((state) => state.auth);
   console.log(user, isAuthenticated);
-
-  const handleLogout = () => {
-    dispatch(logout()); // Dispatch logout action
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    try {
+      const res = await axios.post("http://localhost:3000/api/v1/user/logout", {
+        withCredentials: true,
+      });
+      if (res.data.success) {
+        dispatch(
+          setUser({
+            user: res.data.user,
+            isAuthenticated: false,
+          })
+        );
+        navigate("/");
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
   };
 
   return (
@@ -69,7 +88,7 @@ function Navbar() {
                     <h4 className="font-medium">{user.fullname}</h4>
                     <h4 className="font-medium">{user.email}</h4>
                     <p className="text-sm text-muted-foreground">
-                      Lorem ipsum dolor sit amet consectetur
+                      {user.profile.bio}
                     </p>
                   </div>
                 </div>

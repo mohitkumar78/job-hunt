@@ -7,13 +7,12 @@ import { useNavigate } from "react-router-dom";
 
 const Job = ({ job }) => {
   const navigate = useNavigate();
-  console.log(job); // Keep or remove this line based on your preference
-  const jobid = job._id;
+  const jobid = job._id; // Ensure that job._id is defined
 
   return (
     <div className="p-5 bg-white border border-gray-100 rounded-md shadow-xl">
       <div className="flex items-center justify-between">
-        <p className="text-sm text-gray-500">2 day's ago</p>
+        <p className="text-sm text-gray-500">2 days ago</p>
         <Button variant="outline" className="rounded-full" size="icon">
           <Bookmark />
         </Button>
@@ -37,19 +36,19 @@ const Job = ({ job }) => {
       </div>
       <div className="flex items-center gap-2 mt-4">
         <Badge className={"text-blue-700 font-bold"} variant="ghost">
-          {job.opening} opening
+          {job.openings} openings
         </Badge>
         <Badge className={"text-[#F83002] font-bold"} variant="ghost">
           {job.jobType}
         </Badge>
         <Badge className={"text-[#7209b7] font-bold"} variant="ghost">
-          {job.sallary} rs/month
+          {job.salary} rs/month
         </Badge>
       </div>
       <div className="flex items-center gap-4 mt-4">
         <Button
           onClick={() => {
-            navigate(`discription/${jobid}`);
+            navigate(`/discription/${jobid}`); // Correct path to navigate
           }}
           variant="outline"
         >

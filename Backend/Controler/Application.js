@@ -5,8 +5,8 @@ import mongoose from "mongoose";
 // Create a new application
 export const CreateApplication = async (req, res) => {
     try {
-        const applicantId = req.id;  // Use camelCase consistently
-        const jobId = req.params.id;
+        const { applicantId, jobId } = req.body;  // Use camelCase consistently
+        console.log(applicantId, jobId)
 
         // Check if the user has already applied for this job
         const existingApplication = await Application.findOne({ job: jobId, applicants: applicantId });

@@ -1,28 +1,77 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
+import useGetSingleJob from "../Hook/useGetSingleJob";
+import { useSelector, useDispatch } from "react-redux";
+import { setSingleJob } from "../redux/job.slice";
+import { toast } from "sonner";
+import axios from "axios"; // Make sure to import axios
+
 function JobDescription() {
-  const { userid } = useParams();
-  const isApplied = false;
+  const { jobid } = useParams(); // Get jobid from URL parameters
+  const { singleJob } = useSelector((store) => store.job);
+  const dispatch = useDispatch();
+
+  // Fetch job data using jobid
+  const { user } = useSelector((store) => store.auth);
+  useGetSingleJob(jobid);
+
+  const isIntiallyApplied =
+    singleJob?.applications?.some(
+      (application) => application.applicants === user?._id
+    ) || false;
+
+  const [isApplied, setIsApplied] = useState(isIntiallyApplied);
+
+  const applyJobHandler = async () => {
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/api/v4/application/apply",
+        {
+          token: user.token,
+          applicantId: user._id,
+          jobId: jobid,
+        },
+        { withCredentials: true }
+      );
+
+      if (res.data.success) {
+        setIsApplied(true); // Update the local state
+        const updatedSingleJob = {
+          ...singleJob,
+          applications: [...singleJob.applications, { applicants: user?._id }],
+        };
+        dispatch(setSingleJob(updatedSingleJob)); // helps us to real-time UI update
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      const errorMessage =
+        error.response?.data?.message || "An error occurred."; // Updated error handling
+      toast.error(errorMessage);
+    }
+  };
+
   return (
     <div className="mx-auto my-10 max-w-7xl">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold">Title</h1>
+          <h1 className="text-xl font-bold">{singleJob?.title || "Title"}</h1>
           <div className="flex items-center gap-2 mt-4">
             <Badge className={"text-blue-700 font-bold"} variant="ghost">
-              12Positions
+              {singleJob?.openings || "12"} Positions
             </Badge>
             <Badge className={"text-[#F83002] font-bold"} variant="ghost">
-              frontend Developer
+              {singleJob?.jobType || "Frontend Developer"}
             </Badge>
             <Badge className={"text-[#7209b7] font-bold"} variant="ghost">
-              5LPA
+              {singleJob?.salary || "5LPA"}
             </Badge>
           </div>
         </div>
         <Button
+          onClick={isApplied ? null : applyJobHandler}
           disabled={isApplied}
           className={`rounded-lg ${
             isApplied
@@ -40,37 +89,44 @@ function JobDescription() {
         <h1 className="my-1 font-bold">
           Role:{" "}
           <span className="pl-4 font-normal text-gray-800">
-            Frontend Developer
+            {singleJob?.role || "Frontend Developer"}
           </span>
         </h1>
         <h1 className="my-1 font-bold">
           Location:{" "}
-          <span className="pl-4 font-normal text-gray-800">Mumbai</span>
+          <span className="pl-4 font-normal text-gray-800">
+            {singleJob?.location || "Mumbai"}
+          </span>
         </h1>
         <h1 className="my-1 font-bold">
           Description:{" "}
           <span className="pl-4 font-normal text-gray-800">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum quos
-            quae earum eaque. Vero eum, dignissimos optio vel culpa numquam amet
-            adipisci earum possimus similique fugit delectus, tempore, expedita
-            error iusto! Porro esse iure nostrum, possimus expedita accusantium
-            repellat ea?
+            {singleJob?.description || "Lorem ipsum dolor sit amet..."}
           </span>
         </h1>
         <h1 className="my-1 font-bold">
           Experience:{" "}
-          <span className="pl-4 font-normal text-gray-800">0 yrs</span>
+          <span className="pl-4 font-normal text-gray-800">
+            {singleJob?.experience || "0 yrs"}
+          </span>
         </h1>
         <h1 className="my-1 font-bold">
-          Salary: <span className="pl-4 font-normal text-gray-800">y7LPA</span>
+          Salary:{" "}
+          <span className="pl-4 font-normal text-gray-800">
+            {singleJob?.salary || "7LPA"}
+          </span>
         </h1>
         <h1 className="my-1 font-bold">
           Total Applicants:{" "}
-          <span className="pl-4 font-normal text-gray-800">40</span>
+          <span className="pl-4 font-normal text-gray-800">
+            {singleJob?.applications.length || "40"}
+          </span>
         </h1>
         <h1 className="my-1 font-bold">
           Posted Date:{" "}
-          <span className="pl-4 font-normal text-gray-800">12/20/2023</span>
+          <span className="pl-4 font-normal text-gray-800">
+            {singleJob?.postedDate || "12/20/2023"}
+          </span>
         </h1>
       </div>
     </div>
