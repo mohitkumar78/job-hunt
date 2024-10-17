@@ -26,7 +26,7 @@ function Navbar() {
       if (res.data.success) {
         dispatch(
           setUser({
-            user: res.data.user,
+            user: null,
             isAuthenticated: false,
           })
         );
