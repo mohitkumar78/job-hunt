@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setAllJob } from "../redux/job.slice";
 
 function useGetAllJob() {
+  console.log("all companies");
   const { user } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
 

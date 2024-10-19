@@ -1,7 +1,9 @@
 
 import { Company } from '../Models/company.model.js'
 
-
+import cloudinary from "../Utils/Cloudinary.js"
+import dotenv from 'dotenv'
+dotenv.config()
 export const RigisterCompany = async (req, res) => {
 
     try {
@@ -54,15 +56,18 @@ export const RigisterCompany = async (req, res) => {
 }
 export const getCompany = async (req, res) => {
     try {
+        console.log("req is come for comapny")
         const userId = req.id;
+        console.log(userId)
         if (!userId) {
             return res.status(400).json({
                 message: "user id is not provided",
                 success: false
             })
         }
-
+        console.log("fetching----")
         const comapnies = await Company.find({ userId });
+        console.log(comapnies)
         if (!comapnies) {
             return res.status(404).json({
                 message: "internal server error",
@@ -93,7 +98,7 @@ export const getCompanyById = async (req, res) => {
     try {
         const companyId = req.params.id
         const company = await Company.findById(companyId)
-
+        console.log(company)
         if (!company) {
             return res.status(400).json({
                 message: "comapany not found",
@@ -118,47 +123,87 @@ export const getCompanyById = async (req, res) => {
     }
 }
 
-export const findComapnyAndUpdate = async (req, res) => {
+export const findCompanyAndUpdate = async (req, res) => {
     try {
         const { CompanyName, description, website, location } = req.body;
-        const logo = req.file; // Assuming you're handling file uploads, e.g., via cloudinary
-        const companyId = req.params.id
+        const companyId = req.params.id;
+        console.log("Request received for updating company:", companyId);
+
+        // Check for missing fields
         if (!CompanyName || !description || !website || !location) {
+            console.log("Missing fields");
             return res.status(400).json({
                 message: "Something is missing",
-                success: false
+                success: false,
             });
         }
 
-        const updateComapny = {
-            name: CompanyName,
-            description: description,
-            website: website,
-            location: location,
-            // Add logo field if necessary
-        };
+        let logouri = "";
 
-        // Await the update
-        const updatedcompany = await Company.findByIdAndUpdate(companyId, updateComapny, { new: true }); // 'lean()' simplifies the returned object
-        console.log(updatedcompany)
-        if (!updatedcompany) {
-            return res.status(400).json({
-                message: "Internal server error or company not found",
-                success: false
+        // If there's a file, upload it to Cloudinary
+        if (req.file) {
+            console.log("File detected, starting Cloudinary upload");
+            const resourceType = req.file.mimetype === 'application/pdf' ? 'raw' : 'image';
+
+            try {
+                const uploadResult = await new Promise((resolve, reject) => {
+                    const uploadStream = cloudinary.uploader.upload_stream(
+                        { resource_type: resourceType },
+                        (error, result) => {
+                            if (error) {
+                                console.error("Error uploading to Cloudinary:", error);
+                                return reject(error);
+                            }
+                            resolve(result);
+                        }
+                    );
+                    uploadStream.end(req.file.buffer);
+                });
+
+                logouri = uploadResult.secure_url || "";
+                console.log("Cloudinary upload successful:", logouri);
+            } catch (cloudinaryError) {
+                console.error("Cloudinary upload failed:", cloudinaryError);
+                return res.status(500).json({
+                    message: "Failed to upload file",
+                    success: false,
+                });
+            }
+        }
+
+        // Update the company in the database
+        const findCompany = await Company.findById(companyId);
+
+        if (!findCompany) {
+            console.log("Company not found or internal error");
+            return res.status(404).json({
+                message: "Company not found",
+                success: false,
             });
         }
 
+        findCompany.name = CompanyName || findCompany.name;
+        findCompany.description = description || findCompany.description;
+        findCompany.website = website || findCompany.website;
+        findCompany.location = location || findCompany.location;
+        findCompany.logo = logouri || findCompany.logo;
+
+        await findCompany.save();
+
+        console.log("Company updated successfully");
+
+        // Return success response
         return res.status(200).json({
-            updatedcompany,
+            findCompany,
             message: "Company updated successfully",
-            success: true
+            success: true,
         });
 
     } catch (error) {
-        console.log("Error in updating company", error);
-        res.status(500).json({
+        console.error("Error in updating company", error);
+        return res.status(500).json({
             message: "Internal server error",
-            success: false
+            success: false,
         });
     }
 };

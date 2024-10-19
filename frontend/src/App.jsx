@@ -2,12 +2,16 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
 import Home from "./components/Home";
-import Admin from "./components/Admin";
+import Companies from "./Admin/Companies";
 import Layout from "./components/Layout/Layout";
 import Jobs from "./components/Jobs";
 import Browse from "./components/Browse";
 import Profile from "./components/Profile";
 import JobDescription from "./components/JobDescription";
+import CreateCompany from "./Admin/CreateCompany";
+import { Toaster } from "sonner";
+import CompanySetup from "./Admin/CompanySetup";
+
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -25,10 +29,7 @@ const routes = createBrowserRouter([
         path: "signup", // The Signup route
         element: <Signup />,
       },
-      {
-        path: "admin", // The Admin route
-        element: <Admin />,
-      },
+
       {
         path: "job", // The Jobs route
         element: <Jobs />,
@@ -45,15 +46,29 @@ const routes = createBrowserRouter([
         path: "profile",
         element: <Profile />,
       },
+      {
+        path: "admin/Companies", // The Admin route
+        element: <Companies />,
+      },
+      {
+        path: "admin/createCompany",
+        element: <CreateCompany />,
+      },
+      {
+        path: "admin/companies/:_id",
+        element: <CompanySetup />,
+      },
     ],
   },
 ]);
 
 function App() {
   return (
-    <>
+    <div className="bg-[#003566] h-full">
+      <Toaster position="top-right" />
+
       <RouterProvider router={routes} />
-    </>
+    </div>
   );
 }
 

@@ -57,7 +57,9 @@ function JobDescription() {
     <div className="mx-auto my-10 max-w-7xl">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold">{singleJob?.title || "Title"}</h1>
+          <h1 className="text-xl font-bold text-white">
+            {singleJob?.title || "Title"}
+          </h1>
           <div className="flex items-center gap-2 mt-4">
             <Badge className={"text-blue-700 font-bold"} variant="ghost">
               {singleJob?.openings || "12"} Positions
@@ -86,45 +88,45 @@ function JobDescription() {
         Job Description
       </h1>
       <div className="my-4">
-        <h1 className="my-1 font-bold">
+        <h1 className="my-1 font-bold text-[#f83002]">
           Role:{" "}
-          <span className="pl-4 font-normal text-gray-800">
+          <span className="pl-4 font-normal text-white">
             {singleJob?.role || "Frontend Developer"}
           </span>
         </h1>
-        <h1 className="my-1 font-bold">
+        <h1 className="my-1 font-bold text-[#f83002]">
           Location:{" "}
-          <span className="pl-4 font-normal text-gray-800">
+          <span className="pl-4 font-normal text-white">
             {singleJob?.location || "Mumbai"}
           </span>
         </h1>
-        <h1 className="my-1 font-bold">
+        <h1 className="my-1 font-bold text-[#f83002]">
           Description:{" "}
-          <span className="pl-4 font-normal text-gray-800">
+          <span className="pl-4 font-normal text-white">
             {singleJob?.description || "Lorem ipsum dolor sit amet..."}
           </span>
         </h1>
-        <h1 className="my-1 font-bold">
+        <h1 className="my-1 font-bold text-[#f83002]">
           Experience:{" "}
-          <span className="pl-4 font-normal text-gray-800">
+          <span className="pl-4 font-normal text-white">
             {singleJob?.experience || "0 yrs"}
           </span>
         </h1>
-        <h1 className="my-1 font-bold">
+        <h1 className="my-1 font-bold text-[#f83002]">
           Salary:{" "}
-          <span className="pl-4 font-normal text-gray-800">
+          <span className="pl-4 font-normal text-white">
             {singleJob?.salary || "7LPA"}
           </span>
         </h1>
-        <h1 className="my-1 font-bold">
+        <h1 className="my-1 font-bold text-[#f83002]">
           Total Applicants:{" "}
-          <span className="pl-4 font-normal text-gray-800">
+          <span className="pl-4 font-normal text-white">
             {singleJob?.applications.length || "40"}
           </span>
         </h1>
-        <h1 className="my-1 font-bold">
+        <h1 className="my-1 font-bold text-[#f83002]">
           Posted Date:{" "}
-          <span className="pl-4 font-normal text-gray-800">
+          <span className="pl-4 font-normal text-white">
             {singleJob?.postedDate || "12/20/2023"}
           </span>
         </h1>

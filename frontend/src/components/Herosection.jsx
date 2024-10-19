@@ -15,7 +15,7 @@ function Herosection() {
         records, with top recruiters from diverse industries offering lucrative
         job opportunities.
       </p>
-      <div className="flex w-[40%] shadow-lg border border-gray-200 pl-3 rounded-full items-center gap-4 mx-auto">
+      <div className="flex w-[40%] shadow-lg border bg-white border-gray-200 pl-3 rounded-full items-center gap-4 mx-auto">
         <input
           type="text"
           placeholder="Find your dream jobs"

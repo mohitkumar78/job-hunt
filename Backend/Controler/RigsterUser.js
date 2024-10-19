@@ -7,7 +7,7 @@ dotenv.config();
 
 export const register = async (req, res) => {
     try {
-        console.log("Request received");
+
 
         const { name, email, fullname, PhoneNumber, password, role } = req.body;
 
@@ -70,7 +70,7 @@ export const register = async (req, res) => {
         });
 
         // Save the user to the database
-        console.log(newUser);
+
         await newUser.save();
 
         return res.status(201).json({
@@ -189,7 +189,7 @@ export const Updateuser = async (req, res) => {
     console.log("Update request received");
     try {
         const { fullname, email, PhoneNumber, bio, skills } = req.body;
-        console.log(fullname, email, PhoneNumber, bio, skills);
+
 
 
         const userid = req.id || req.params.id; // Ensure correct user ID source

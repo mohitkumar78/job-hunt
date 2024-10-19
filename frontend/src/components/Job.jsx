@@ -7,7 +7,13 @@ import { useNavigate } from "react-router-dom";
 
 const Job = ({ job }) => {
   const navigate = useNavigate();
-  const jobid = job._id; // Ensure that job._id is defined
+
+  // Ensure the job prop is defined before accessing its properties
+  if (!job) {
+    return <div>Job information is not available.</div>;
+  }
+
+  const jobid = job._id; // This will now safely read _id if job is defined
 
   return (
     <div className="p-5 bg-white border border-gray-100 rounded-md shadow-xl">
@@ -48,7 +54,7 @@ const Job = ({ job }) => {
       <div className="flex items-center gap-4 mt-4">
         <Button
           onClick={() => {
-            navigate(`/discription/${jobid}`); // Correct path to navigate
+            navigate(`/discription/${jobid}`);
           }}
           variant="outline"
         >

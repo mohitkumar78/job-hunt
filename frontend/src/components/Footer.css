@@ -1,71 +1,85 @@
+/* Footer.css */
 .cu-footer {
-  background-color: #333;
+  background-color: #f83002;
   color: white;
-  padding: 40px 0;
-  text-align: left;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 5px 0; /* Reduced padding for half the height */
+  z-index: 100;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
+.cu-footer .container {
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .footer-content {
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
   width: 100%;
 }
 
 .footer-section {
   flex: 1;
-  margin: 10px;
-  min-width: 200px;
 }
 
 .footer-section h2,
 .footer-section h3 {
-  color: #fff;
+  margin-bottom: 5px;
+  font-size: 1rem; /* Smaller font size */
 }
 
 .footer-section p,
 .footer-section a {
-  color: #bbb;
-}
-
-.footer-section a {
+  color: white;
+  margin: 3px 0;
   text-decoration: none;
-  transition: color 0.3s ease;
 }
 
 .footer-section a:hover {
-  color: #ef0000; /* Highlight color */
+  text-decoration: underline;
 }
 
-.footer-bottom {
-  text-align: center;
-  padding-top: 20px;
-  border-top: 1px solid #555;
-}
-
-.social-icons {
-  list-style-type: none;
-  padding: 0;
+.footer-section.social ul {
+  display: flex;
+  gap: 10px;
 }
 
 .social-icons li {
-  display: inline;
-  margin: 0 10px;
+  list-style: none;
 }
 
 .social-icons a {
-  color: #bbb;
-  font-size: 1.2rem;
+  color: white;
+  font-size: 1rem; /* Smaller icon size */
+  transition: color 0.3s ease;
 }
 
 .social-icons a:hover {
-  color: #ef0000;
+  color: #ffcccb;
+}
+
+/* Footer bottom */
+.footer-bottom {
+  text-align: center;
+  padding: 5px 0; /* Reduced padding */
+  background-color: #cc2900;
+}
+
+.footer-bottom p {
+  margin: 0;
+  color: white;
+  font-size: 0.8rem; /* Smaller text */
+}
+
+/* Ensure the footer doesn't overlap content */
+body {
+  margin: 0;
+  padding-bottom: 30px; /* Adjusted to match the new footer height */
 }

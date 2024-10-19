@@ -6,11 +6,11 @@ import useGetAllJob from "../Hook/useGetAllJob";
 function Home() {
   useGetAllJob();
   return (
-    <>
+    <div>
       <Herosection />
       <Categorycarousel />
       <LatestJob />
-    </>
+    </div>
   );
 }
 

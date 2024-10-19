@@ -52,7 +52,7 @@ function Login() {
         );
         console.log(res.data.user);
         if (res.data.user.role === "recruiter") {
-          navigate("/admin");
+          navigate("/admin/Companies");
         } else {
           navigate("/");
         }
