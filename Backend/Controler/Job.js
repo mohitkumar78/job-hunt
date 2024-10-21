@@ -4,10 +4,12 @@ import job from "../Models/job.model.js";
 
 export const CreateJob = async (req, res) => {
     try {
-        const { title, description, requirements, sallary, location, jobType, expriance, opening, CompanyId } = req.body;
-        const userId = req.id;
 
-        if (!title || !description || !requirements || !sallary || !location || !opening || !CompanyId || !expriance) {
+        const { title, description, requirements, salary, location, jobType, experience, opening, CompanyId } = req.body;
+        const userId = req.id;
+        console.log(title, description, requirements, salary, location, jobType, experience, opening, CompanyId)
+
+        if (!title || !description || !requirements || !salary || !location || !opening || !CompanyId || !experience) {
             return res.status(400).json({
                 message: "Something is Missing",
                 success: false
@@ -16,14 +18,14 @@ export const CreateJob = async (req, res) => {
 
         // Rename the local variable to something else (e.g., newJob)
         const newJob = await job.create({
-            title,
-            description,
+            title: title,
+            description: description,
             requirements: requirements.split(","),
-            sallary,
-            location,
-            jobType,
-            opening,
-            expriance,
+            sallary: salary,
+            location: location,
+            jobType: jobType,
+            opening: opening,
+            expriance: experience,
             company: CompanyId,
             createdBy: userId
         });
@@ -116,7 +118,11 @@ export const getJobById = async (req, res) => {
 
 export const adminjobs = async (req, res) => {
     const adminId = req.id
-    const jobs = await job.find({ createdBy: adminId })
+    const jobs = await job.find({ createdBy: adminId }).populate({
+        path: "company"
+    }
+
+    )
 
     if (!jobs) {
         return res.status(400).json({

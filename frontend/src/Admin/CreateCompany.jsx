@@ -34,8 +34,6 @@ function CreateCompany() {
       } else {
         toast.error("Something went wrong while registering the company.");
       }
-
-      console.log(res);
     } catch (error) {
       console.log("Error occurred while registering the company.");
       toast.error("Error occurred while registering the company.");
@@ -43,42 +41,42 @@ function CreateCompany() {
   };
 
   return (
-    <div>
-      <div className="max-w-4xl mx-auto">
-        <div className="my-10">
-          <h1 className="text-2xl font-bold text-[#F83002]">
-            Your Company Name{" "}
+    <div className="min-h-screen bg-[#003566] flex items-center justify-center text-white">
+      <div className="max-w-4xl w-full mx-auto p-8 bg-[#001D3D] rounded-lg shadow-lg">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-[#F83002]">
+            Create Your Company
           </h1>
-          <p className="text-white">
-            What would you like to give your company name? You can change this
-            later.
+          <p className="mt-2 text-gray-300">
+            Give your company a unique name. You can always change this later.
           </p>
         </div>
-        <Label className="font-sans text-2xl text-white">Company Name</Label>
+
+        <Label className="mb-2 text-lg font-semibold text-white">
+          Company Name
+        </Label>
         <Input
           type="text"
-          className="my-2 text-white"
-          placeholder="Google, JobHunt, Microsoft, etc..."
+          className="mb-4 bg-white text-black w-full px-4 py-2 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-[#F83002]"
+          placeholder="Enter company name (e.g., Google, JobHunt, Microsoft)"
           onChange={(e) => {
             e.preventDefault();
             setComapny(e.target.value);
           }}
-        ></Input>
-        <div className="flex items-center gap-5 mb-10 my-7">
+        />
+
+        <div className="flex items-center gap-5 mt-6">
           <Button
             variant="outline"
-            onClick={() => {
-              navigate("/admin/companies"); // Fix the path
-            }}
+            className="text-white transition-colors duration-300 border border-gray-300 hover:bg-gray-700 hover:border-gray-600"
+            onClick={() => navigate("/admin/companies")}
           >
             Cancel
           </Button>
 
           <Button
-            variant="outline"
-            onClick={() => {
-              RigisterCompany();
-            }}
+            className="bg-[#F83002] text-white px-6 py-2 rounded-md hover:bg-[#cc2600] transition-colors duration-300"
+            onClick={RigisterCompany}
           >
             Continue
           </Button>

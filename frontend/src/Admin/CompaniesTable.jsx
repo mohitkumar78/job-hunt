@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -15,11 +15,25 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "../components/ui/popover";
+import { useNavigate } from "react-router-dom";
 import { Edit2, MoreHorizontal } from "lucide-react";
 
 function CompaniesTable() {
-  const { Companies } = useSelector((store) => store.company);
-  console.log(Companies);
+  const { Companies, searchText } = useSelector((store) => store.company);
+  const [filterCompany, setFilterCompany] = useState(Companies);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const filteredCompany =
+      Companies.length >= 0 &&
+      Companies.filter((company) => {
+        if (!searchText) {
+          return true;
+        }
+        return company?.name?.toLowerCase().includes(searchText.toLowerCase());
+      });
+    setFilterCompany(filteredCompany);
+  }, [Companies, searchText]);
 
   return (
     <div>
@@ -36,14 +50,14 @@ function CompaniesTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {Companies.length === 0 ? (
+          {filterCompany.length === 0 ? (
             <TableRow>
               <TableCell colSpan={4} className="text-center text-white">
                 No company is registered by you
               </TableCell>
             </TableRow>
           ) : (
-            Companies.map((company) => (
+            filterCompany.map((company) => (
               <TableRow key={company._id}>
                 {" "}
                 {/* Ensure each company is in its own row */}
@@ -62,7 +76,13 @@ function CompaniesTable() {
                       <MoreHorizontal />
                     </PopoverTrigger>
                     <PopoverContent className="w-32">
-                      <div className="flex items-center gap-2 cursor-pointer w-fit">
+                      <div
+                        onClick={(e) => {
+                          e.preventDefault();
+                          navigate(`/admin/companies/${company._id}`); // Correctly navigate using company._id
+                        }}
+                        className="flex items-center gap-2 cursor-pointer w-fit"
+                      >
                         <Edit2 className="w-4" />
                         <span>Edit</span>
                       </div>

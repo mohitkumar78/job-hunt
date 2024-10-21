@@ -108,7 +108,7 @@ export const getApplicants = async (req, res) => {
                 path: "applicants"
             }
         });
-
+        console.log(JOB)
         if (!JOB) {
             return res.status(404).json({
                 message: "No applicants found for this job",
@@ -134,6 +134,7 @@ export const getApplicants = async (req, res) => {
 export const updateSatus = async (req, res) => {
 
     try {
+        console.log("req is coming")
         const { status } = req.body;
         const applicationId = req.params.id;
 

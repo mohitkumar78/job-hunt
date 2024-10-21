@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
 import CompaniesTable from "./CompaniesTable";
 import { useNavigate } from "react-router-dom";
 import useGetAllComapnies from "../Hook/useGetAllComapnies";
+import { useDispatch } from "react-redux";
+import { setSearchText } from "../redux/Company.slice";
 
 function Companies() {
   useGetAllComapnies();
+  const [input, setInput] = useState(""); // Corrected "setinput" to "setInput"
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setSearchText(input)); // Dispatch search text when input changes
+  }, [input]);
 
   return (
     <div className="min-h-screen bg-[#003566] text-white py-10">
@@ -30,6 +38,8 @@ function Companies() {
           <Input
             className="bg-white text-black w-96 px-4 py-2 rounded-lg shadow-md focus:ring focus:ring-[#F83002]"
             placeholder="Search companies by name..."
+            value={input} // Bind input state to value
+            onChange={(e) => setInput(e.target.value)} // Update state when user types
           />
         </div>
 

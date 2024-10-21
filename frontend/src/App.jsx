@@ -11,7 +11,9 @@ import JobDescription from "./components/JobDescription";
 import CreateCompany from "./Admin/CreateCompany";
 import { Toaster } from "sonner";
 import CompanySetup from "./Admin/CompanySetup";
-
+import AdminJob from "./Admin/AdminJob";
+import PostJob from "./Admin/PostJob";
+import Applicants from "./Admin/Applicants";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -57,6 +59,18 @@ const routes = createBrowserRouter([
       {
         path: "admin/companies/:_id",
         element: <CompanySetup />,
+      },
+      {
+        path: "/admin/job",
+        element: <AdminJob />,
+      },
+      {
+        path: "/admin/jobs/create",
+        element: <PostJob />,
+      },
+      {
+        path: "/admin/jobs/:_id/applicants",
+        element: <Applicants />,
       },
     ],
   },

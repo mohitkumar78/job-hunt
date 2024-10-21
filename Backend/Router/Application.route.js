@@ -5,7 +5,7 @@ import { isAuthenticated } from '../Middleware/isAuthenticated.js';
 const router = express.Router();
 
 router.route("/apply").post(isAuthenticated, CreateApplication);
-router.route("/getAppliedJob").get(isAuthenticated, getAppliedJob);
-router.route("/getApplicant/:id").get(isAuthenticated, getApplicants);
-router.route("/update/:id").put(isAuthenticated, updateSatus);
+router.route("/getAppliedJob").post(isAuthenticated, getAppliedJob);
+router.route("/getApplicant/:id").post(isAuthenticated, getApplicants);
+router.route("/update/:id").post(isAuthenticated, updateSatus);
 export default router;

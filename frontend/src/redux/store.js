@@ -5,6 +5,7 @@ import { combineReducers } from 'redux';
 import authReducer from './auth.slice';
 import jobReducer from './job.slice';
 import companyReducer from './Company.slice';
+import ApplicantReducer from './Applicants.slice';
 
 // Persist Config
 const persistConfig = {
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
     auth: authReducer,
     job: jobReducer,
     company: companyReducer,
+    applicants: ApplicantReducer,
 });
 
 // Create a persisted reducer
