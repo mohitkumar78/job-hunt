@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { RadioGroup } from "@/components/ui/radio-group";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../redux/auth.slice";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
   const dispatch = useDispatch();
+  const { user } = useSelector((store) => store.auth);
   const navigate = useNavigate();
   const [input, setInput] = useState({
     email: "",
@@ -61,7 +62,11 @@ function Login() {
       console.error("Login failed:", error.response?.data || error.message);
     }
   };
-
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, []);
   return (
     <div
       className="flex items-center justify-start min-h-screen bg-center bg-cover"

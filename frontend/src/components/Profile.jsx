@@ -7,13 +7,14 @@ import AppliedJobTable from "./AppliedJobTable"; // Assuming this component exis
 import { Badge } from "./ui/badge";
 import EditProfile from "./EditProfile";
 import { useSelector } from "react-redux";
+import useGetAllAppliedJob from "../Hook/useGetAllAppliedJob";
 function Profile() {
   const { user } = useSelector((store) => store.auth);
   console.log(user);
   const [open, setOpen] = useState(false);
   const isResume = true; // or set it based on your logic for the resume link
   const skills = user?.profile?.skills || [];
-
+  useGetAllAppliedJob();
   return (
     <div className="max-w-3xl p-8 mx-auto my-5 bg-white border border-gray-200 shadow-lg rounded-2xl">
       <div className="flex items-center justify-between gap-6">

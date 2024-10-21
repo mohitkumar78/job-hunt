@@ -21,11 +21,11 @@ export const CreateJob = async (req, res) => {
             title: title,
             description: description,
             requirements: requirements.split(","),
-            sallary: salary,
+            salary: salary,
             location: location,
             jobType: jobType,
             opening: opening,
-            expriance: experience,
+            experience: experience,
             company: CompanyId,
             createdBy: userId
         });
@@ -47,34 +47,39 @@ export const CreateJob = async (req, res) => {
 
 export const getAllJob = async (req, res) => {
     try {
-        const keyword = req.params.keyword || "";
+        // Use req.query to get query string parameters
+        const keyword = req.query.keyword || "";
+        console.log(keyword);
+
         const query = {
             $or: [
-                { "title": { $regex: keyword, $options: "i" } },  // Case-insensitive search for title
-                { "description": { $regex: keyword, $options: "i" } }  // Case-insensitive search for description
-            ]
+                { title: { $regex: keyword, $options: "i" } }, // Case-insensitive search for title
+                { description: { $regex: keyword, $options: "i" } }, // Case-insensitive search for description
+            ],
         };
 
-        const jobs = await job.find(query).populate('company');  // Assuming you want to populate the company field
+        const jobs = await job.find(query).populate("company"); // Assuming you want to populate the company field
+
         if (!jobs.length) {
             return res.status(404).json({
                 message: "No jobs found",
-                success: false
+                success: false,
             });
         }
 
         return res.status(200).json({
             jobs,
-            success: true
+            success: true,
         });
     } catch (error) {
         console.log("Error in get all job:", error);
         return res.status(500).json({
             message: "Internal server error",
-            success: false
+            success: false,
         });
     }
 };
+
 
 
 export const getJobById = async (req, res) => {

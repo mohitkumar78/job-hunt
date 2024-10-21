@@ -4,15 +4,19 @@ import { useSelector, useDispatch } from "react-redux";
 import { setAllJob } from "../redux/job.slice";
 
 function useGetAllJob() {
-  console.log("all companies");
   const { user } = useSelector((store) => store.auth);
+  const { searchTextQuerry } = useSelector((store) => store.job); // Correctly grabbing searchTextQuerry
   const dispatch = useDispatch();
+
+  console.log("searchTextQuerry:", searchTextQuerry); // Logging to check if it's being captured
 
   useEffect(() => {
     const fetchAllJobs = async () => {
       try {
         const res = await axios.post(
-          "http://localhost:3000/api/v3/jobs/getalljob",
+          `http://localhost:3000/api/v3/jobs/getalljob?keyword=${
+            searchTextQuerry || ""
+          }`, // Adding default empty string if searchTextQuerry is undefined
           {
             token: user?.token,
           },
@@ -26,8 +30,8 @@ function useGetAllJob() {
 
         console.log("Jobs fetched successfully:", res.data);
 
-        // Dispatch res.data directly
-        dispatch(setAllJob(res.data.jobs)); // Update this line
+        // Dispatch the jobs data to Redux store
+        dispatch(setAllJob(res.data.jobs)); // Dispatching jobs list
       } catch (error) {
         console.log("Error fetching jobs:", error);
       }
@@ -36,7 +40,7 @@ function useGetAllJob() {
     if (user?.token) {
       fetchAllJobs();
     }
-  }, [user?.token, dispatch]);
+  }, [user?.token, searchTextQuerry, dispatch]); // Adding searchTextQuerry to dependency array
 
   return null; // or any UI based on the hook
 }
