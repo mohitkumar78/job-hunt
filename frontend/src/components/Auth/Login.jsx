@@ -8,7 +8,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../redux/auth.slice";
 import { useNavigate } from "react-router-dom";
-
+import { toast } from "sonner";
 function Login() {
   const dispatch = useDispatch();
   const { user } = useSelector((store) => store.auth);
@@ -45,6 +45,7 @@ function Login() {
 
       if (res.data) {
         // Make sure to set both `user` and `isAuthenticated` in the dispatch payload
+        toast.success(res.data.message);
         dispatch(
           setUser({
             user: res.data.user,

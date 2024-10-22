@@ -7,7 +7,9 @@ import userrouter from './Router/user.route.js';
 import companyrouter from './Router/Company.route.js';
 import jobrouter from './Router/job.route.js';
 import ApplicationRoute from './Router/Application.route.js'
+import path from 'path'
 const app = express();
+const _dirname = path.resolve()
 dotenv.config();
 
 app.use(express.json());
@@ -30,6 +32,10 @@ app.use("/api/v1/user", userrouter)
 app.use("/api/v2/company", companyrouter)
 app.use("/api/v3/jobs", jobrouter)
 app.use("/api/v4/application", ApplicationRoute)
+app.use(express.static(path.join(_dirname, '/frontend/dist')))
+app.get("*", (req, res) => {
+    res.sendFile(path.resolve(_dirname, "frontend", "dist", "index.html"))
+})
 app.listen(port, () => {
     Db_Connect();  // This should work if the import is correct
     console.log(`App is running on port ${port}`);

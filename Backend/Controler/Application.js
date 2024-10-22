@@ -163,7 +163,7 @@ export const updateSatus = async (req, res) => {
         })
 
     } catch (error) {
-        console.log("error in updatestatus function", error)
+        ("error in updatestatus function", error)
         return res.status(400).json({
             message: "Internal server error",
             success: false
