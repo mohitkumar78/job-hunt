@@ -85,7 +85,7 @@ const EditProfile = ({ open, setOpen }) => {
       ) {
         toast.error(error.response.data.message);
       } else {
-        toast.error("An error occurred while updating the profile.");
+        toast.error("An error occurred while updating the profile.", error);
       }
     } finally {
       setLoading(false);
