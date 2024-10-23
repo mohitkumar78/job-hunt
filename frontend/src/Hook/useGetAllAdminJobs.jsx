@@ -9,7 +9,7 @@ function useGetAllAdminJobs() {
     const fetchAdminJob = async () => {
       try {
         const res = await axios.post(
-          "http://localhost:3000/api/v3/jobs/getJobAdmin",
+          "https://job-hunt-4.onrender.com/api/v3/jobs/getJobAdmin",
           {
             token: user?.token,
           },

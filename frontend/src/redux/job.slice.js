@@ -30,7 +30,7 @@ const jobSlice = createSlice({
             state.allAppliedJob = action.payload
         },
         setSearchQuerry: (state, action) => {
-            console.log(action.payload)
+
             state.searchTextQuerry = action.payload
         }
 

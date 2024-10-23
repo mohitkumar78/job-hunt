@@ -14,7 +14,7 @@ function useGetAllJob() {
     const fetchAllJobs = async () => {
       try {
         const res = await axios.post(
-          `http://localhost:3000/api/v3/jobs/getalljob?keyword=${
+          `https://job-hunt-4.onrender.com/api/v3/jobs/getalljob?keyword=${
             searchTextQuerry || ""
           }`, // Adding default empty string if searchTextQuerry is undefined
           {

@@ -12,7 +12,7 @@ function useGetSingleJob(jobid) {
     const fetchSingleJob = async (jobid, token) => {
       try {
         const res = await axios.post(
-          `http://localhost:3000/api/v3/jobs/getjobById`, // Pass jobid in the URL
+          `https://job-hunt-4.onrender.com/api/v3/jobs/getjobById`, // Pass jobid in the URL
           { token: token, jobid: jobid }, // Send the token and jobid in the request body
           {
             headers: {

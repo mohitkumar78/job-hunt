@@ -24,9 +24,12 @@ function Navbar() {
 
   const handleLogout = async () => {
     try {
-      const res = await axios.post("http://localhost:3000/api/v1/user/logout", {
-        withCredentials: true,
-      });
+      const res = await axios.post(
+        "https://job-hunt-4.onrender.com/api/v1/user/logout",
+        {
+          withCredentials: true,
+        }
+      );
       if (res.data.success) {
         dispatch(
           setUser({

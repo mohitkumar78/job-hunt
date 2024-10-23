@@ -27,7 +27,7 @@ function JobDescription() {
   const applyJobHandler = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/v4/application/apply",
+        "https://job-hunt-4.onrender.com/api/v4/application/apply",
         {
           token: user.token,
           applicantId: user._id,

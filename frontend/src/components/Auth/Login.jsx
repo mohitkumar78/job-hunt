@@ -30,7 +30,7 @@ function Login() {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/v1/user/login",
+        "https://job-hunt-4.onrender.com/api/v1/user/login",
         {
           email: input.email,
           password: input.password,

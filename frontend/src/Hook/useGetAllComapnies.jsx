@@ -11,7 +11,7 @@ function useGetAllCompanies() {
     const getAllCompanies = async () => {
       try {
         const res = await axios.post(
-          "http://localhost:3000/api/v2/company/get",
+          "https://job-hunt-4.onrender.com/api/v2/company/get",
           {
             token: user?.token,
           },

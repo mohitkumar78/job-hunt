@@ -11,7 +11,7 @@ function useCompanyDetail(_id) {
     const fetchSingleCompany = async (token, companyId) => {
       try {
         const res = await axios.post(
-          `http://localhost:3000/api/v2/company/get/${companyId}`, // Pass the actual _id (companyId) here
+          `https://job-hunt-4.onrender.com/api/v2/company/get/${companyId}`, // Pass the actual _id (companyId) here
           { token }, // Send the token in the request body
           {
             headers: {

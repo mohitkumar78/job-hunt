@@ -56,7 +56,7 @@ const EditProfile = ({ open, setOpen }) => {
     try {
       setLoading(true);
       const res = await axios.post(
-        `http://localhost:3000/api/v1/user/profile/update`,
+        `https://job-hunt-4.onrender.com/api/v1/user/profile/update`,
         formData,
         {
           headers: {

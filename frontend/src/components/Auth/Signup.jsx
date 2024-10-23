@@ -48,7 +48,7 @@ function Signup() {
       formData.append("file", input.file);
 
       const response = await axios.post(
-        "http://localhost:3000/api/v1/user/register",
+        "https://job-hunt-4.onrender.com/api/v1/user/register",
         formData,
         {
           headers: {

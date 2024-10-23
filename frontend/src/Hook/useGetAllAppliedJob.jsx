@@ -9,7 +9,7 @@ function useGetAllAppliedJob() {
     const AppliedJob = async () => {
       try {
         const res = await axios.post(
-          "http://localhost:3000/api/v4/application/getAppliedJob",
+          "https://job-hunt-4.onrender.com/api/v4/application/getAppliedJob",
           {
             token: user?.token,
           },
