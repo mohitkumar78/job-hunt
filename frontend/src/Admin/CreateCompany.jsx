@@ -17,7 +17,7 @@ function CreateCompany() {
   const RigisterCompany = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/v2/company/register",
+        "https://job-hunt-4.onrender.com/api/v2/company/register",
         {
           token: user?.token,
           CompanyName: company,

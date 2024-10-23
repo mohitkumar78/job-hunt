@@ -53,7 +53,7 @@ const PostJob = () => {
     try {
       setLoading(true);
       const res = await axios.post(
-        `http://localhost:3000/api/v3/jobs/createjob`,
+        `https://job-hunt-4.onrender.com/api/v3/jobs/createjob`,
         input,
         {
           headers: {

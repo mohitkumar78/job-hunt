@@ -51,7 +51,7 @@ const CompanySetup = () => {
 
     try {
       const res = await axios.post(
-        `http://localhost:3000/api/v2/company/update/${params._id}`,
+        `https://job-hunt-4.onrender.com/api/v2/company/update/${params._id}`,
         formData,
         {
           headers: {

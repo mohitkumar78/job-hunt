@@ -22,7 +22,7 @@ function ApplicantsTable() {
   const updateJobStatus = async (status, id) => {
     try {
       const res = await axios.post(
-        `http://localhost:3000/api/v4/application/update/${id}`,
+        `https://job-hunt-4.onrender.com/api/v4/application/update/${id}`,
         { status: status, token: user?.token },
         {
           headers: {
