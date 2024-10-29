@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
@@ -6,7 +6,7 @@ import useGetSingleJob from "../Hook/useGetSingleJob";
 import { useSelector, useDispatch } from "react-redux";
 import { setSingleJob } from "../redux/job.slice";
 import { toast } from "sonner";
-import axios from "axios"; // Make sure to import axios
+import axios from "axios";
 
 function JobDescription() {
   const { jobid } = useParams(); // Get jobid from URL parameters
@@ -17,14 +17,24 @@ function JobDescription() {
   const { user } = useSelector((store) => store.auth);
   useGetSingleJob(jobid);
 
-  const isIntiallyApplied =
+  const isInitiallyApplied =
     singleJob?.applications?.some(
       (application) => application.applicants === user?._id
     ) || false;
 
-  const [isApplied, setIsApplied] = useState(isIntiallyApplied);
+  const [isApplied, setIsApplied] = useState(isInitiallyApplied);
+
+  // Re-check if application state changes when singleJob updates
+  useEffect(() => {
+    setIsApplied(isInitiallyApplied);
+  }, [singleJob, user]);
 
   const applyJobHandler = async () => {
+    if (!user || !user.token || !user._id) {
+      toast.error("Please log in to apply for the job.");
+      return;
+    }
+
     try {
       const res = await axios.post(
         "https://job-hunt-4.onrender.com/api/v4/application/apply",
@@ -37,18 +47,19 @@ function JobDescription() {
       );
 
       if (res.data.success) {
-        setIsApplied(true); // Update the local state
+        setIsApplied(true); // Update local state
         const updatedSingleJob = {
           ...singleJob,
           applications: [...singleJob.applications, { applicants: user?._id }],
         };
-        dispatch(setSingleJob(updatedSingleJob)); // helps us to real-time UI update
+        dispatch(setSingleJob(updatedSingleJob)); // Real-time UI update
         toast.success(res.data.message);
       }
     } catch (error) {
-      console.log(error);
+      console.error("Application error:", error);
       const errorMessage =
-        error.response?.data?.message || "An error occurred."; // Updated error handling
+        error.response?.data?.message ||
+        "An error occurred during application.";
       toast.error(errorMessage);
     }
   };
@@ -121,7 +132,7 @@ function JobDescription() {
         <h1 className="my-1 font-bold text-[#f83002]">
           Total Applicants:{" "}
           <span className="pl-4 font-normal text-white">
-            {singleJob?.applications.length || "40"}
+            {singleJob?.applications?.length || "40"}
           </span>
         </h1>
         <h1 className="my-1 font-bold text-[#f83002]">
