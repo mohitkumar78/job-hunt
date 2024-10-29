@@ -46,7 +46,6 @@ function Signup() {
       formData.append("password", input.password);
       formData.append("role", input.role);
       formData.append("file", input.file);
-
       const response = await axios.post(
         "https://job-hunt-4.onrender.com/api/v1/user/register",
         formData,
