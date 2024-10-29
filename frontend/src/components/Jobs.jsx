@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 function Jobs() {
   const jobArray = [1, 2, 3, 4, 5, 6, 7, 8];
   const { alljobs, searchTextQuerry } = useSelector((store) => store.job);
+  console.log(alljobs);
   const [filterJobs, setFilterJobs] = useState(alljobs);
   useEffect(() => {
     if (searchTextQuerry) {
