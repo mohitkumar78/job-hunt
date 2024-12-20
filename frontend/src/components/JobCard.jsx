@@ -1,33 +1,39 @@
 import React from "react";
 import { Badge } from "./ui/badge";
 import { useNavigate } from "react-router-dom";
+
 function JobCard({ job }) {
   const navigate = useNavigate();
+
   return (
     <div
-      onClick={() => {
-        navigate(`/discription/${job._id}`);
-      }}
-      className="p-5 bg-white border border-gray-100 rounded-md shadow-xl cursor-pointer"
+      onClick={() => navigate(`/discription/${job._id}`)}
+      className="flex flex-col justify-between p-6 transition-shadow bg-white border border-gray-200 rounded-lg shadow-lg cursor-pointer hover:shadow-2xl"
     >
+      {/* Company Details */}
       <div>
-        <h1 className="text-lg font-medium">{job?.company?.name}</h1>
+        <h1 className="text-xl font-semibold text-gray-800">
+          {job?.company?.name}
+        </h1>
         <p className="text-sm text-gray-500">{job?.location}</p>
       </div>
-      <div>
-        <h1 className="my-2 text-lg font-bold">{job.title}</h1>
-        <p className="text-sm text-gray-600">{job.description}</p>
+
+      {/* Job Title and Description */}
+      <div className="mt-4">
+        <h2 className="mb-2 text-lg font-bold text-gray-900">{job.title}</h2>
+        <p className="text-sm text-gray-600 line-clamp-3">{job.description}</p>
       </div>
 
-      <div className="flex items-center gap-2 mt-4">
-        <Badge className={"text-blue-700 font-bold"} variant="ghost">
-          {job.opening} opening
+      {/* Badges for Job Info */}
+      <div className="flex flex-wrap items-center gap-2 mt-6">
+        <Badge className="px-3 py-1 font-bold text-blue-700 bg-blue-100 rounded-full">
+          {job.opening} Openings
         </Badge>
-        <Badge className={"text-[#f83002] font-bold"} variant="ghost">
+        <Badge className="px-3 py-1 font-bold text-red-700 bg-red-100 rounded-full">
           {job.jobType}
         </Badge>
-        <Badge className={"text-[#7209b7] font-bold"} variant="ghost">
-          {job.sallary} rs/month
+        <Badge className="px-3 py-1 font-bold text-purple-700 bg-purple-100 rounded-full">
+          ₹{job.sallary} / Month
         </Badge>
       </div>
     </div>

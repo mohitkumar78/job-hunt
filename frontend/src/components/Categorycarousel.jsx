@@ -24,19 +24,17 @@ function Categorycarousel() {
   };
 
   return (
-    <div className="flex items-center justify-center gap-3">
-      {Category.map((cat, index) => {
-        return (
-          <Button
-            key={index}
-            onClick={() => searchHandler(cat)}
-            variant="outline"
-            className="rounded-full"
-          >
-            {cat}
-          </Button>
-        );
-      })}
+    <div className="flex flex-wrap justify-center gap-4">
+      {Category.map((cat, index) => (
+        <Button
+          key={index}
+          onClick={() => searchHandler(cat)}
+          variant="outline"
+          className="px-5 py-2 text-gray-800 bg-gray-100 border border-gray-300 rounded-full hover:bg-gray-200"
+        >
+          {cat}
+        </Button>
+      ))}
     </div>
   );
 }
