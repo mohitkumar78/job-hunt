@@ -20,7 +20,7 @@ app.use(cookieParser());
 
 // CORS configuration
 const corsOptions = {
-    origin: "http://localhost:5173",  // Update this for production if needed
+    origin: "https://job-hunt-4.onrender.com",  // Update this for production if needed
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 };
